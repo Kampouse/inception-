@@ -7,11 +7,12 @@ RUN apt-get update && \
 WORKDIR /tmp/mariadb/
 
 COPY src/ /tmp/mariadb/
-
+COPY src/run.sh /usr/local/bin/
+RUN chmod +x /usr/local/bin/run.sh
 
 RUN mkdir -p /run/mysql
 
-RUN apt-get -qq install  mariadb-client mariadb-common mariadb-server-10.5 -y
+RUN apt-get -qq install  dumb-init mariadb-common mariadb-common mariadb-server-10.5 -y
 
 RUN service mariadb start && mariadb -u root < /tmp/mariadb/setup.sql
 
@@ -23,4 +24,5 @@ RUN mkdir tempmysql/
 RUN cp -r /var/lib/mysql/* tempmysql
 
 EXPOSE 3306
-CMD cp -r tempmysql/* /var/lib/mysql/ && mysqld 
+ENTRYPOINT [ "dumb-init","--" ]
+CMD  [ "run.sh"]

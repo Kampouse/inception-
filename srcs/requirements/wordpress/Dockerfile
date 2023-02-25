@@ -3,9 +3,10 @@ FROM debian:bullseye
 RUN apt-get update && \
 	apt-get upgrade -y
 
-RUN apt-get install -y php-fpm php-mysql curl 	mariadb-client 
+RUN apt-get install -y php-fpm php-mysql curl 	mariadb-client dumb-init
 WORKDIR /tmp/
 ENV BUILDDIR=/tmp/build/
+ENV RUN=false
 RUN mkdir ${BUILDDIR}
 RUN mkdir -p /run/php
 COPY src/ ${WORKDIR}
@@ -21,4 +22,4 @@ EXPOSE 9000
 RUN cp -a ${BUILDDIR}. /var/www/ 
 
 COPY src/docker-entrypoint.sh /usr/local/bin/
-ENTRYPOINT  [ "sh", "/usr/local/bin/docker-entrypoint.sh" ]
+ENTRYPOINT  [ "dumb-init", "--", "sh", "/usr/local/bin/docker-entrypoint.sh" ]

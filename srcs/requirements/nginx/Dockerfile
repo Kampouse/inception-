@@ -2,7 +2,7 @@ FROM debian:bullseye
 
 RUN apt-get update && \
 	apt-get upgrade -y
-RUN apt-get install nginx curl openssl  -y
+RUN apt-get install nginx curl openssl dumb-init   -y
 WORKDIR /tmp/
 ENV BUILDDIR=/tmp/build/
 RUN mkdir ${BUILDDIR}
@@ -18,5 +18,6 @@ ln -fs /etc/nginx/sites-available/nginx.conf /etc/nginx/sites-enabled/
 
 EXPOSE  443
 RUN chmod -R 777 ${BUILDDIR}
+ENTRYPOINT [ "dumb-init", "--" ]
 CMD cp -a ${BUILDDIR}. /var/www/ && \
 	nginx -g 'daemon off;'
