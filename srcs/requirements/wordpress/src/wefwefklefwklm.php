@@ -3,7 +3,7 @@
 define( 'DB_NAME', 'wordpress' );
 define( 'DB_USER', 'jemartel' );
 define( 'DB_PASSWORD', 'mypassword' );
-define( 'DB_HOST', 'mariadb' );
+define( 'DB_HOST', 'wordpress' );
 define( 'DB_CHARSET', 'utf8mb4' );
 define( 'DB_COLLATE', '' );
 define('AUTH_KEY',         'UEFHrv@4!hxGIF@p}76mlBic4@}C^AkKoux+ZgkxL:*9O:q};oh<kl#Q1eTt4Hq4');

@@ -1,5 +1,5 @@
 
-FROM debian:buster
+FROM debian:bullseye
 
 RUN apt-get update && \
 	apt-get upgrade -y
@@ -11,9 +11,10 @@ COPY src/ /tmp/mariadb/
 
 RUN mkdir -p /run/mysql
 
-RUN apt-get -qq install mariadb-server -y
+RUN apt-get -qq install  mariadb-client mariadb-common mariadb-server-10.5 -y
 
-RUN service mysql start && mariadb -u root < /tmp/mariadb/setup.sql
+RUN service mariadb start && mariadb -u root < /tmp/mariadb/setup.sql
+
 
 RUN 	sed 's/bind-address            = 127.0.0.1/bind-address            = 0.0.0.0/'\
 		 -i /etc/mysql/mariadb.conf.d/50-server.cnf
