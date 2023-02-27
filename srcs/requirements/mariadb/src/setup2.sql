@@ -6,13 +6,13 @@ GRANT ALL ON wordpress.* to '$WORDPRESS_DB_USER'@'%' IDENTIFIED BY '$WORDPRESS_D
 
 FLUSH PRIVILEGES;
 
-CREATE USER 'superuser'@'localhost' IDENTIFIED BY 'password';
+CREATE USER 'superuser'@'localhost' IDENTIFIED BY '$ROOTPASS';
 GRANT ALL PRIVILEGES ON *.* TO 'superuser'@'localhost' WITH GRANT OPTION;
 FLUSH PRIVILEGES;
-CREATE USER 'superuser'@'%' IDENTIFIED BY 'password';
+CREATE USER 'superuser'@'%' IDENTIFIED BY '$ROOTPASS';
 GRANT ALL PRIVILEGES ON *.* TO 'superuser'@'%' WITH GRANT OPTION;
 
 FLUSH PRIVILEGES;
 
-ALTER USER 'root'@'localhost' IDENTIFIED BY 'newpass';
+ALTER USER 'root'@'localhost' IDENTIFIED BY '$ROOTPASS';
 flush privileges;
