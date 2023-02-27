@@ -3,7 +3,13 @@ version: "3"
 services:
   mariadb:
     container_name: "mariadb"
-    build: ./requirements/mariadb/
+    build: 
+      context: ./requirements/mariadb/
+      args:
+        - WORDPRESS_DB_USER=${WORDPRESS_DB_USER}
+        - WORDPRESS_DB_HOST=${WORDPRESS_DB_HOST}
+        - WORDPRESS_DB_NAME=${WORDPRESS_DB_NAME}
+        - WORDPRESS_DB_PASSWORD=${WORDPRESS_DB_PASSWORD}
     restart: unless-stopped
     volumes:
       - ${VOLPATH}/mariadb/:/var/lib/mysql/
@@ -14,7 +20,14 @@ services:
 
   wordpress:
     container_name: "wordpress"
-    build: ./requirements/wordpress/
+    env_file:
+      - .env
+    build: 
+      context:
+        ./requirements/wordpress/
+      args:
+        - WORDPRESS_DB_USER=${WORDPRESS_DB_USER}
+
     volumes:
       - ${VOLPATH}/wordpress:/var/www/wordpress/
     restart: unless-stopped
@@ -22,9 +35,6 @@ services:
       - inception
     depends_on:
       - "mariadb"
-    env_file:
-      - .env
-
   nginx:
     container_name: "nginx"
     build: ./requirements/nginx/

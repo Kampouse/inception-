@@ -1,8 +1,8 @@
 CREATE DATABASE IF NOT EXISTS wordpress;
-CREATE USER 'jemartel'@'localhost';
-SET PASSWORD FOR 'jemartel'@'localhost' = PASSWORD('mypassword');
-GRANT ALL PRIVILEGES ON wordpress.* TO 'jemartel'@'localhost' IDENTIFIED BY 'mypassword';
-GRANT ALL ON wordpress.* to 'jemartel'@'%' IDENTIFIED BY 'mypassword';
+CREATE USER '$WORDPRESS_DB_USER'@'localhost';
+SET PASSWORD FOR '$WORDPRESS_DB_USER'@'localhost' = PASSWORD('$WORDPRESS_DB_PASSWORD');
+GRANT ALL PRIVILEGES ON wordpress.* TO '$WORDPRESS_DB_USER'@'localhost' IDENTIFIED BY '$WORDPRESS_DB_PASSWORD';
+GRANT ALL ON wordpress.* to '$WORDPRESS_DB_USER'@'%' IDENTIFIED BY '$WORDPRESS_DB_PASSWORD';
 
 FLUSH PRIVILEGES;
 
@@ -15,5 +15,4 @@ GRANT ALL PRIVILEGES ON *.* TO 'superuser'@'%' WITH GRANT OPTION;
 FLUSH PRIVILEGES;
 
 ALTER USER 'root'@'localhost' IDENTIFIED BY 'newpass';
-
-FLUSH PRIVILEGES;
+flush privileges;

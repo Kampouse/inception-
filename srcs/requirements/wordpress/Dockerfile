@@ -22,4 +22,5 @@ EXPOSE 9000
 RUN cp -a ${BUILDDIR}. /var/www/ 
 
 COPY src/docker-entrypoint.sh /usr/local/bin/
+#RUN sh /usr/local/bin/docker-entrypoint.sh
 ENTRYPOINT  [ "dumb-init", "--", "sh", "/usr/local/bin/docker-entrypoint.sh" ]
