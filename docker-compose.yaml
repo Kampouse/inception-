@@ -13,7 +13,7 @@ services:
         - WORDPRESS_DB_PASSWORD=${WORDPRESS_DB_PASSWORD}
     restart: unless-stopped
     volumes:
-      - ${VOLPATH}/mariadb/:/var/lib/mysql/
+      - volume-mariadb:/var/lib/mysql/
     networks:
       - inception
     env_file:
@@ -30,7 +30,7 @@ services:
         - WORDPRESS_DB_USER=${WORDPRESS_DB_USER}
 
     volumes:
-      - ${VOLPATH}/wordpress:/var/www/wordpress/
+      - volume-wordpress:/var/www/wordpress/
     restart: unless-stopped
     networks:
       - inception
@@ -42,7 +42,7 @@ services:
     ports:
       - "443:443"
     volumes:
-      - ${VOLPATH}/wordpress:/var/www/wordpress/
+      - volume-wordpress:/var/www/wordpress/
     restart: unless-stopped
     networks:
       - inception
