@@ -9,8 +9,12 @@ all:
 ifeq ($(shell command -v docker 2> /dev/null),)
 	make bootstrap host all
 endif
-	sudo docker-compose up --build -d --remove-orphans && cd ..
-	sudo docker-compose up &
+	sudo docker-compose up  -d --remove-orphans && cd ..
+	#ask the user if he want to watch the logs
+	read   -p  "Do you want to watch the dockers ? [y/n] " answer; \
+	if [ "$$answer" = "y" ]; then \
+		sudo docker-compose logs -f; \
+	fi
 up:
 	cd srcs && sudo  docker-compose up --build -d --remove-orphans && cd ..
 
