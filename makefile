@@ -24,6 +24,10 @@ down:
 fdown:
 	cd srcs &&  sudo docker-compose down -t 2 -v && cd ..
 	sudo rm -rf ~/data
+prune: clean
+	sudo docker system prune -a -f
+	
+
 
 clean:
 	sudo docker-compose down --rmi all
