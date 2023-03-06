@@ -9,14 +9,13 @@ wp-cli user create $AUTHOR $AUTHORMAIL --role=author  --user_pass=$AUTHORTPASS -
 echo "fully installed wordpress now launching wordpress"  
 php-fpm7.4 -F -R
 fi
- 
-echo "launching wordpress"
+if ping -c 1  $WORDPRESS_DB_HOST > /dev/null &&  echo "Database is online. Connecting... Wordpress is ready to use"
+then
+    php-fpm7.4 -F -R
 
-wp-cli core download --allow-root --path="/var/www/wordpress/" || true
-sleep 5
-wp-cli core install --allow-root --title="Wordpress" --admin_user=$WORDPRESS_DB_USER  --admin_password=$WORDPRESS_DB_PASSWORD  --admin_email="jp@rat.com" --path="/var/www/wordpress/" --url="https://localhost/" 
-wp-cli user create $AUTHOR $AUTHORMAIL --role=author  --user_pass=$AUTHORTPASS --allow-root --path="/var/www/wordpress/" ||  true
+else
+    echo "Error: Database is not online. Exiting..."
+fi
 
-sleep 8 && php-fpm7.4 -F -R
 
 

@@ -16,9 +16,6 @@ ENV WORDPRESS_DB_HOST ${WORDPRESS_DB_HOST}
 ENV WORDPRESS_DB_PASSWORD ${WORDPRESS_DB_PASSWORD}
 ENV WORDPRESS_DB_USER ${WORDPRESS_DB_USER}
 COPY src/ /tmp/mariadb/
-COPY src/run.sh /usr/local/bin/
-RUN chmod +x /usr/local/bin/run.sh
-
 RUN mkdir -p /run/mysql
 
 RUN apt-get -qq install  dumb-init mariadb-common mariadb-common mariadb-server-10.5 -y
@@ -33,4 +30,4 @@ RUN cp -r /var/lib/mysql/* tempmysql
 
 EXPOSE 3306
 ENTRYPOINT [ "dumb-init","--" ]
-CMD  [ "run.sh"]
+CMD  [ "mysqld"]
